@@ -2,6 +2,7 @@
   "name": "finance-app-api",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "npx husky install"
@@ -17,5 +18,10 @@
     "globals": "^16.0.0",
     "husky": "^8.0.3",
     "lint-staged": "^15.5.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "pg": "^8.14.1"
   }
 }
