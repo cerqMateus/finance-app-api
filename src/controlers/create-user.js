@@ -1,5 +1,6 @@
 import CreateUserUseCase from '../use-cases/create-user.js';
 import validator from 'validator';
+import { badRequest, created, serverError } from './helpers.js';
 
 export class CreateUserController {
   async execute(httpRequest) {
@@ -11,31 +12,20 @@ export class CreateUserController {
 
       for (const field of requiredFields) {
         if (!params[field] || params[field].trim().length === 0) {
-          return {
-            statusCode: 400,
-            body: {
-              errorMessage: `Missing param: ${field}`,
-            },
-          };
+          return badRequest({ errorMessage: `Missing param ${field}` });
         }
       }
 
       if (params.password.length < 6) {
-        return {
-          statusCode: 400,
-          body: {
-            errorMessage: 'Password must have at least 6 characters',
-          },
-        };
+        return badRequest({
+          errorMessage: 'Password must have at least 6 characters',
+        });
       }
 
       if (!validator.isEmail(params.email)) {
-        return {
-          statusCode: 400,
-          body: {
-            errorMessage: 'Invalid email. Please provide a valid email',
-          },
-        };
+        return badRequest({
+          errorMessage: 'Invalid email. Please provide a valid email',
+        });
       }
 
       // Chamar o use case
@@ -43,18 +33,10 @@ export class CreateUserController {
       const createdUser = await createUserUseCase.execute(params);
 
       // Retornar o resultado (status code)
-      return {
-        statusCode: 201,
-        body: createdUser,
-      };
+      return created(createdUser);
     } catch (error) {
       console.log(error);
-      return {
-        statusCode: 500,
-        body: {
-          errorMessage: 'Internal server error',
-        },
-      };
+      return serverError;
     }
   }
 }
