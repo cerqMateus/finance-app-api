@@ -1,22 +1,27 @@
-import { badRequest, ok, serverError } from './helpers.js';
+import { badRequest, ok, serverError } from './helpers/http.js';
 import validator from 'validator';
 import { UpdateUserUseCase } from '../use-cases/update-user.js';
+import {
+  checkIfEmailIsValid,
+  checkIfPasswordIsValid,
+  generateEmailAlreadyInUseResponse,
+  generateInvalidIdResponse,
+  generateInvalidPasswordResponse,
+} from './helpers/user.js';
 
 export class UpdateUserController {
   async execute(httpRequest) {
     try {
-      const updateUserParams = httpRequest.body;
+      const params = httpRequest.body;
       const isIdValid = validator.isUUID(httpRequest.params.userId);
       if (!isIdValid) {
-        return badRequest({
-          errorMessage: 'Invalid id',
-        });
+        return generateInvalidIdResponse;
       }
       const userId = httpRequest.params.userId;
 
       const allowedFields = ['first_name', 'last_name', 'email', 'password'];
 
-      const someFieldIsNotAllowed = Object.keys(updateUserParams).some(
+      const someFieldIsNotAllowed = Object.keys(params).some(
         (field) => !allowedFields.includes(field),
       );
 
@@ -26,27 +31,22 @@ export class UpdateUserController {
         });
       }
 
-      if (updateUserParams.password) {
-        if (updateUserParams.password.length < 6) {
-          return badRequest({
-            errorMessage: 'Password must have at least 6 characters',
-          });
+      if (params.password) {
+        const passwordIsValid = checkIfPasswordIsValid(params.password);
+        if (!passwordIsValid) {
+          return generateInvalidPasswordResponse;
         }
       }
 
-      if (updateUserParams.email) {
-        if (!validator.isEmail(updateUserParams.email)) {
-          return badRequest({
-            errorMessage: 'Invalid email. Please provide a valid email',
-          });
+      if (params.email) {
+        const emailIsValid = checkIfEmailIsValid(params.email);
+        if (!emailIsValid) {
+          return generateEmailAlreadyInUseResponse;
         }
       }
 
       const updateUserUseCase = new UpdateUserUseCase();
-      const updatedUser = await updateUserUseCase.execute(
-        userId,
-        updateUserParams,
-      );
+      const updatedUser = await updateUserUseCase.execute(userId, params);
       return ok(updatedUser);
     } catch (error) {
       console.error(error);
