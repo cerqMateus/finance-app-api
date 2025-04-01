@@ -1,10 +1,12 @@
+// UpdateUserUseCase.js
 import { EmailAlreadyInUseError } from '../errors/user.js';
 import { PostgresGetUserByEmailRepository } from '../repositories/postgres/get-user-by-email.js';
+import { PostgresUpdateUserRepository } from '../repositories/postgres/update-user.js';
 import bcrypt from 'bcrypt';
 
 export class UpdateUserUseCase {
   async execute(userId, updateUserParams) {
-    //1. Se o email estiver sendo atualizado, verificar se ele ja esta em uso
+    // 1. Verificar se o email já está em uso
     if (updateUserParams.email) {
       const postgresGetUserByEmailRepository =
         new PostgresGetUserByEmailRepository();
@@ -12,29 +14,25 @@ export class UpdateUserUseCase {
       const userWithProvidedEmail =
         await postgresGetUserByEmailRepository.execute(updateUserParams.email);
 
-      if (userWithProvidedEmail) {
+      if (userWithProvidedEmail && userWithProvidedEmail.id !== userId) {
         throw new EmailAlreadyInUseError(updateUserParams.email);
       }
     }
 
-    const user = {
-      ...updatedUser,
-    };
+    // 2. Preparar os dados para atualização
+    const userDataToUpdate = { ...updateUserParams };
 
-    //2. Se a senha estiver sendo atualizada, criptografá-la
-
+    // 3. Criptografar a senha se fornecida
     if (updateUserParams.password) {
       const hashedPassword = await bcrypt.hash(updateUserParams.password, 10);
-
-      user.password = hashedPassword;
+      userDataToUpdate.password = hashedPassword;
     }
 
-    //3. chamar o Repository para atualizar o usuario
-
-    const postgresUpdateUserRepository = new postgresUpdateUserRepository();
+    // 4. Atualizar o usuário
+    const postgresUpdateUserRepository = new PostgresUpdateUserRepository();
     const updatedUser = await postgresUpdateUserRepository.execute(
       userId,
-      user,
+      userDataToUpdate,
     );
 
     return updatedUser;
