@@ -27,3 +27,10 @@ export const ok = (body) => {
     body,
   };
 };
+
+export const notFount = (body) => {
+  return {
+    statusCode: 404,
+    body,
+  };
+};

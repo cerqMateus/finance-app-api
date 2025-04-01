@@ -1,5 +1,5 @@
 import validator from 'validator';
-import { badRequest, ok, serverError } from './helpers.js';
+import { badRequest, notFount, ok, serverError } from './helpers.js';
 import { GetUserByIdUseCase } from '../use-cases/get-user-by-id.js';
 export class GetUserByIdController {
   async execute(httpRequest) {
@@ -13,6 +13,11 @@ export class GetUserByIdController {
     try {
       const getUserByIdUseCase = new GetUserByIdUseCase();
       const user = await getUserByIdUseCase.execute(httpRequest.params.userId);
+
+      if (!user) {
+        return notFount;
+      }
+
       return ok(user);
     } catch (error) {
       console.log(error);
