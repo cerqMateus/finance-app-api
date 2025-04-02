@@ -28,7 +28,7 @@ export const ok = (body) => {
   };
 };
 
-export const notFount = (body) => {
+export const notFound = (body) => {
   return {
     statusCode: 404,
     body,
