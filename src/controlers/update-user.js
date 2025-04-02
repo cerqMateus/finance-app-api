@@ -1,4 +1,3 @@
-import validator from 'validator';
 import { UpdateUserUseCase } from '../use-cases/index.js';
 import {
   checkIfEmailIsValid,
@@ -9,13 +8,14 @@ import {
   badRequest,
   ok,
   serverError,
+  checkIfIdIsValid,
 } from './helpers/index.js';
 
 export class UpdateUserController {
   async execute(httpRequest) {
     try {
       const params = httpRequest.body;
-      const isIdValid = validator.isUUID(httpRequest.params.userId);
+      const isIdValid = checkIfIdIsValid;
       if (!isIdValid) {
         return generateInvalidIdResponse;
       }
