@@ -1,17 +1,17 @@
 import { badRequest, notFound } from './http.js';
 import validator from 'validator';
 
-export const generateInvalidPasswordResponse = () =>
+export const invalidPasswordResponse = () =>
   badRequest({
     errorMessage: 'Password must have at least 6 characters',
   });
 
-export const generateEmailAlreadyInUseResponse = () =>
+export const emailAlreadyInUseResponse = () =>
   badRequest({
     errorMessage: 'Invalid email. Please provide a valid email',
   });
 
-export const generateInvalidIdResponse = () =>
+export const invalidIdResponse = () =>
   badRequest({ errorMessage: 'The provided id is invalid' });
 
 export const userNotFound = () =>

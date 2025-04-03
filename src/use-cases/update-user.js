@@ -1,11 +1,10 @@
-// UpdateUserUseCase.js
 import { EmailAlreadyInUseError } from '../errors/user.js';
 import bcrypt from 'bcrypt';
 
 export class UpdateUserUseCase {
   constructor(updateUserRepository, getUserByEmailRepository) {
-    this.updateUserRepository = updateUserRepository;
     this.getUserByEmailRepository = getUserByEmailRepository;
+    this.updateUserRepository = updateUserRepository;
   }
 
   async execute(userId, updateUserParams) {

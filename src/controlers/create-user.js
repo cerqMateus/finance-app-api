@@ -2,8 +2,8 @@ import { EmailAlreadyInUseError } from '../errors/user.js';
 import {
   checkIfEmailIsValid,
   checkIfPasswordIsValid,
-  generateEmailAlreadyInUseResponse,
-  generateInvalidPasswordResponse,
+  emailAlreadyInUseResponse,
+  invalidPasswordResponse,
   badRequest,
   created,
   serverError,
@@ -29,12 +29,12 @@ export class CreateUserController {
       const passwordIsValid = checkIfPasswordIsValid(params.password);
 
       if (!passwordIsValid) {
-        return generateInvalidPasswordResponse;
+        return invalidPasswordResponse;
       }
 
       const emailIsValid = checkIfEmailIsValid(params.email);
       if (!emailIsValid) {
-        return generateEmailAlreadyInUseResponse;
+        return emailAlreadyInUseResponse;
       }
 
       // Chamar o use case
