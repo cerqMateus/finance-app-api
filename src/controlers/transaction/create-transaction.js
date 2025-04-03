@@ -5,7 +5,7 @@ import {
   created,
   invalidIdResponse,
   serverError,
-} from '../helpers';
+} from '../helpers/index.js';
 
 export class CreateTransactionController {
   constructor(createTransactionUseCase) {
@@ -14,19 +14,12 @@ export class CreateTransactionController {
 
   async execute(httpRequest) {
     try {
-      const requiredFields = [
-        'id',
-        'user_id',
-        'name',
-        'date',
-        'amount',
-        'type',
-      ];
+      const requiredFields = ['user_id', 'name', 'date', 'amount', 'type'];
 
       const params = httpRequest.body;
 
       for (const field of requiredFields) {
-        if (!params[field] || params[field].trim().length === 0) {
+        if (!params[field] || params[field].toString().trim().length === 0) {
           return badRequest({ errorMessage: `Missing param ${field}` });
         }
       }
