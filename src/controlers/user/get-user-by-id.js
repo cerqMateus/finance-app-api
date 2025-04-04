@@ -1,6 +1,10 @@
 import validator from 'validator';
-import { ok, serverError } from '../helpers/http.js';
-import { invalidIdResponse, userNotFound } from '../helpers/user.js';
+import {
+  invalidIdResponse,
+  userNotFound,
+  ok,
+  serverError,
+} from '../helpers/index.js';
 export class GetUserByIdController {
   constructor(getUserByIdUseCase) {
     this.getUserByIdUseCase = getUserByIdUseCase;
