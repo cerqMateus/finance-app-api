@@ -28,3 +28,7 @@ export const validateRequiredFields = (params, requiredFields) => {
     missingField: undefined,
   };
 };
+
+export const requiredFieldIsMissingResponse = (field) => {
+  badRequest({ errorMessage: `The field ${field} is required.` });
+};
