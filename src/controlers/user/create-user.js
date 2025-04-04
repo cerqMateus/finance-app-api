@@ -7,6 +7,7 @@ import {
   badRequest,
   created,
   serverError,
+  validateRequiredFields,
 } from '../helpers/index.js';
 
 export class CreateUserController {
@@ -20,10 +21,15 @@ export class CreateUserController {
       // Validar requisição (campos obrigatórios, tamanho de senha e email)
       const requiredFields = ['first_name', 'last_name', 'email', 'password'];
 
-      for (const field of requiredFields) {
-        if (!params[field] || params[field].trim().length === 0) {
-          return badRequest({ errorMessage: `Missing param ${field}` });
-        }
+      const requiredFieldsValidation = validateRequiredFields(
+        params,
+        requiredFields,
+      );
+
+      if (!requiredFieldsValidation.ok) {
+        return badRequest({
+          errorMessage: `Missing param: ${requiredFieldsValidation.missingField}`,
+        });
       }
 
       const passwordIsValid = checkIfPasswordIsValid(params.password);
