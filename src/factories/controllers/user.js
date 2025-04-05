@@ -5,7 +5,7 @@ import {
   UpdateUserController,
 } from '../../controlers/index.js';
 import {
-  PostgreGetUserByIdRepository,
+  PostgresGetUserByIdRepository,
   PostgresCreateUserRepository,
   PostgresDeleteUserRepository,
   PostgresGetUserByEmailRepository,
@@ -19,7 +19,7 @@ import {
 } from '../../use-cases/index.js';
 
 export const makeGetUserByIdController = () => {
-  const getUserByIdRepository = new PostgreGetUserByIdRepository();
+  const getUserByIdRepository = new PostgresGetUserByIdRepository();
 
   const getUserByIdUseCase = new GetUserByIdUseCase(getUserByIdRepository);
 

@@ -1,5 +1,5 @@
 import { UserNotFoundError } from '../../errors/user.js';
-import { serverError } from '../helpers.js';
+import { serverError } from '../helpers/index.js';
 import { ok } from '../helpers/http.js';
 import { userNotFound } from '../helpers/user.js';
 import {
@@ -38,9 +38,9 @@ export class GetTransactionByUserIdController {
       console.error(error);
 
       if (error instanceof UserNotFoundError) {
-        userNotFound();
+        return userNotFound(); // Fixed: added return
       }
-      return serverError;
+      return serverError();
     }
   }
 }

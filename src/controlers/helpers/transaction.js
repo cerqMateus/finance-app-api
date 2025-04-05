@@ -1,12 +1,17 @@
 import validator from 'validator';
 import { badRequest } from './http.js';
 
-export const checkIfAmountIsValid = (params) =>
-  validator.isCurrency(params.amount.toString(), {
+export const checkIfAmountIsValid = (params) => {
+  if (!params || params.amount === undefined || params.amount === null) {
+    return false;
+  }
+
+  return validator.isCurrency(params.amount.toString(), {
     digits_after_decimal: [2],
     allow_negatives: false,
     decimal_separator: '.',
   });
+};
 
 export const checkIfTypeIsValid = (type) =>
   ['EARNING', 'EXPENSE', 'INVESTMENT'].includes(type);

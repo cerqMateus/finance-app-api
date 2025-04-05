@@ -40,6 +40,13 @@ app.delete('/api/users/:userId', async (req, res) => {
   res.status(statusCode).send(body);
 });
 
+app.get('/api/transactions', async (req, res) => {
+  const getUserByIdController = makeGetUserByIdController();
+  const { statusCode, body } = await getUserByIdController.execute(req);
+
+  res.status(statusCode).send(body);
+});
+
 app.post('/api/transactions', async (req, res) => {
   const createTransactionController = makeCreateTransactionController(req);
   const { statusCode, body } = await createTransactionController.execute(req);
