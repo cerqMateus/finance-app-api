@@ -6,8 +6,8 @@ export class CreateTransactionUseCase {
     this.createTransactionRepository = createTransactionRepository;
     this.getUserByIdRepository = getUserByIdRepository;
   }
+
   async execute(createTransactionParams) {
-    //Validar se o usuário existe
     const userId = createTransactionParams.user_id;
 
     const user = await this.getUserByIdRepository.execute(userId);
@@ -16,11 +16,8 @@ export class CreateTransactionUseCase {
       throw new UserNotFoundError(userId);
     }
 
-    //Criar Id da transação
-
     const transactionId = uuidv4();
 
-    //Criar transação
     const transaction = await this.createTransactionRepository.execute({
       ...createTransactionParams,
       id: transactionId,

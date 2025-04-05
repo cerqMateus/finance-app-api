@@ -1,19 +1,20 @@
 import {
   CreateTransactionController,
-  GetTransactionByUserIdController,
-} from '../../controlers/index.js';
+  GetTransactionsByUserIdController,
+} from '../../controllers/index.js';
 import {
+  PostgresCreateTransactionRepository,
   PostgresGetUserByIdRepository,
-  PostgresCreateTransactionRepositoy,
-  PostgresGetTransactionByUserIdRepository,
+  PostgresGetTransactionsByUserIdRepository,
 } from '../../repositories/postgres/index.js';
 import {
   CreateTransactionUseCase,
-  GetTransactionByIdUseCase,
+  GetTransactionsByUserIdUseCase,
 } from '../../use-cases/index.js';
 
 export const makeCreateTransactionController = () => {
-  const createTransactionRepository = new PostgresCreateTransactionRepositoy();
+  const createTransactionRepository = new PostgresCreateTransactionRepository();
+
   const getUserByIdRepository = new PostgresGetUserByIdRepository();
 
   const createTransactionUseCase = new CreateTransactionUseCase(
@@ -28,20 +29,19 @@ export const makeCreateTransactionController = () => {
   return createTransactionController;
 };
 
-export const makeGetTransactionByUserIdController = () => {
-  const getTransactionByUserIdRepository =
-    new PostgresGetTransactionByUserIdRepository();
+export const makeGetTransactionsByUserIdController = () => {
+  const getTransactionsByUserIdRepository =
+    new PostgresGetTransactionsByUserIdRepository();
 
   const getUserByIdRepository = new PostgresGetUserByIdRepository();
 
-  const getTransactionByIdUseCase = new GetTransactionByIdUseCase(
-    getTransactionByUserIdRepository,
+  const getTransactionsByUserIdUseCase = new GetTransactionsByUserIdUseCase(
+    getTransactionsByUserIdRepository,
     getUserByIdRepository,
   );
 
-  const getTransactionByUserIdController = new GetTransactionByUserIdController(
-    getTransactionByIdUseCase,
-  );
+  const getTransactionsByUserIdController =
+    new GetTransactionsByUserIdController(getTransactionsByUserIdUseCase);
 
-  return getTransactionByUserIdController;
+  return getTransactionsByUserIdController;
 };

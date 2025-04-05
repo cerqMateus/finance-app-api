@@ -1,14 +1,13 @@
-import { EmailAlreadyInUseError } from '../../errors/user.js';
 import bcrypt from 'bcrypt';
+import { EmailAlreadyInUseError } from '../../errors/user.js';
 
 export class UpdateUserUseCase {
-  constructor(updateUserRepository, getUserByEmailRepository) {
+  constructor(getUserByEmailRepository, updateUserRepository) {
     this.getUserByEmailRepository = getUserByEmailRepository;
     this.updateUserRepository = updateUserRepository;
   }
 
   async execute(userId, updateUserParams) {
-    // 1. Verificar se o email já está em uso
     if (updateUserParams.email) {
       const userWithProvidedEmail = await this.getUserByEmailRepository.execute(
         updateUserParams.email,
@@ -19,20 +18,15 @@ export class UpdateUserUseCase {
       }
     }
 
-    // 2. Preparar os dados para atualização
-    const userDataToUpdate = { ...updateUserParams };
+    const user = { ...updateUserParams };
 
-    // 3. Criptografar a senha se fornecida
     if (updateUserParams.password) {
       const hashedPassword = await bcrypt.hash(updateUserParams.password, 10);
-      userDataToUpdate.password = hashedPassword;
+
+      user.password = hashedPassword;
     }
 
-    // 4. Atualizar o usuário
-    const updatedUser = await this.updateUserRepository.execute(
-      userId,
-      userDataToUpdate,
-    );
+    const updatedUser = await this.updateUserRepository.execute(userId, user);
 
     return updatedUser;
   }

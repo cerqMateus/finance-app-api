@@ -2,24 +2,24 @@ import { PostgresHelper } from '../../../db/postgres/helper.js';
 
 export class PostgresUpdateUserRepository {
   async execute(userId, updateUserParams) {
-    const updatedFields = [];
-    const updatedValues = [];
+    const updateFields = [];
+    const updateValues = [];
 
     Object.keys(updateUserParams).forEach((key) => {
-      updatedFields.push(`${key} = $${updatedValues.length + 1}`);
-      updatedValues.push(updateUserParams[key]);
+      updateFields.push(`${key} = $${updateValues.length + 1}`);
+      updateValues.push(updateUserParams[key]);
     });
 
-    updatedValues.push(userId);
+    updateValues.push(userId);
 
     const updateQuery = `
-    UPDATE users
-    SET ${updatedFields.join(', ')}
-    WHERE id = $${updatedValues.length}
-    RETURNING *
-    `;
+            UPDATE users
+            SET ${updateFields.join(', ')} 
+            WHERE id = $${updateValues.length}
+            RETURNING *
+        `;
 
-    const updatedUser = await PostgresHelper.query(updateQuery, updatedValues);
+    const updatedUser = await PostgresHelper.query(updateQuery, updateValues);
 
     return updatedUser[0];
   }

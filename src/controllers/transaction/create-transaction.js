@@ -18,27 +18,25 @@ export class CreateTransactionController {
 
   async execute(httpRequest) {
     try {
-      const requiredFields = ['user_id', 'name', 'date', 'amount', 'type'];
-
       const params = httpRequest.body;
 
-      const requiredFieldsValidation = validateRequiredFields(
-        params,
-        requiredFields,
-      );
+      const requiredFields = ['user_id', 'name', 'date', 'amount', 'type'];
 
-      if (!requiredFieldsValidation.ok) {
-        return requiredFieldIsMissingResponse(
-          requiredFieldsValidation.missingField,
-        );
+      const { ok: requiredFieldsWereProvided, missingField } =
+        validateRequiredFields(params, requiredFields);
+
+      if (!requiredFieldsWereProvided) {
+        return requiredFieldIsMissingResponse(missingField);
       }
 
       const userIdIsValid = checkIfIdIsValid(params.user_id);
+
       if (!userIdIsValid) {
         return invalidIdResponse();
       }
 
       const amountIsValid = checkIfAmountIsValid(params.amount);
+
       if (!amountIsValid) {
         return invalidAmountResponse();
       }

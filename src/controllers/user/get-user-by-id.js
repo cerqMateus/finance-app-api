@@ -1,17 +1,20 @@
-import validator from 'validator';
 import {
+  checkIfIdIsValid,
   invalidIdResponse,
-  userNotFound,
+  userNotFoundResponse,
   ok,
   serverError,
 } from '../helpers/index.js';
+
 export class GetUserByIdController {
   constructor(getUserByIdUseCase) {
     this.getUserByIdUseCase = getUserByIdUseCase;
   }
+
   async execute(httpRequest) {
     try {
-      const isIdValid = validator.isUUID(httpRequest.params.userId);
+      const isIdValid = checkIfIdIsValid(httpRequest.params.userId);
+
       if (!isIdValid) {
         return invalidIdResponse();
       }
@@ -21,12 +24,12 @@ export class GetUserByIdController {
       );
 
       if (!user) {
-        return userNotFound();
+        return userNotFoundResponse();
       }
 
       return ok(user);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return serverError();
     }
   }

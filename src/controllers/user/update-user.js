@@ -3,7 +3,7 @@ import {
   checkIfEmailIsValid,
   checkIfIdIsValid,
   checkIfPasswordIsValid,
-  emailAlreadyInUseResponse,
+  emailIsAlreadyInUseResponse,
   invalidIdResponse,
   invalidPasswordResponse,
   badRequest,
@@ -18,38 +18,31 @@ export class UpdateUserController {
 
   async execute(httpRequest) {
     try {
-      const userId = httpRequest.params?.userId;
-
-      if (!userId) {
-        return invalidIdResponse();
-      }
+      const userId = httpRequest.params.userId;
 
       const isIdValid = checkIfIdIsValid(userId);
+
       if (!isIdValid) {
         return invalidIdResponse();
       }
 
-      const params = httpRequest.body || {};
-
-      if (Object.keys(params).length === 0) {
-        return badRequest({
-          message: 'No fields provided for update',
-        });
-      }
+      const params = httpRequest.body;
 
       const allowedFields = ['first_name', 'last_name', 'email', 'password'];
-      const invalidFields = Object.keys(params).filter(
+
+      const someFieldIsNotAllowed = Object.keys(params).some(
         (field) => !allowedFields.includes(field),
       );
 
-      if (invalidFields.length > 0) {
+      if (someFieldIsNotAllowed) {
         return badRequest({
-          message: `Invalid fields provided: ${invalidFields.join(', ')}`,
+          message: 'Some provided field is not allowed.',
         });
       }
 
       if (params.password) {
         const passwordIsValid = checkIfPasswordIsValid(params.password);
+
         if (!passwordIsValid) {
           return invalidPasswordResponse();
         }
@@ -57,16 +50,13 @@ export class UpdateUserController {
 
       if (params.email) {
         const emailIsValid = checkIfEmailIsValid(params.email);
+
         if (!emailIsValid) {
-          return emailAlreadyInUseResponse();
+          return emailIsAlreadyInUseResponse();
         }
       }
 
       const updatedUser = await this.updateUserUseCase.execute(userId, params);
-
-      if (!updatedUser) {
-        return serverError();
-      }
 
       return ok(updatedUser);
     } catch (error) {

@@ -1,10 +1,17 @@
-import { badRequest } from './http.js';
 import validator from 'validator';
+import { badRequest } from './http.js';
 
 export const checkIfIdIsValid = (id) => validator.isUUID(id);
 
 export const invalidIdResponse = () =>
-  badRequest({ errorMessage: 'The provided id is invalid' });
+  badRequest({
+    message: 'The provided id is not valid.',
+  });
+
+export const requiredFieldIsMissingResponse = (field) =>
+  badRequest({
+    message: `The field ${field} is required.`,
+  });
 
 export const checkIfIsString = (value) => typeof value === 'string';
 
@@ -13,7 +20,9 @@ export const validateRequiredFields = (params, requiredFields) => {
     const fieldIsMissing = !params[field];
     const fieldIsEmpty =
       checkIfIsString(params[field]) &&
-      validator.isEmpty(params[field], { ignore_whitespace: false });
+      validator.isEmpty(params[field], {
+        ignore_whitespace: true,
+      });
 
     if (fieldIsMissing || fieldIsEmpty) {
       return {
@@ -27,8 +36,4 @@ export const validateRequiredFields = (params, requiredFields) => {
     ok: true,
     missingField: undefined,
   };
-};
-
-export const requiredFieldIsMissingResponse = (field) => {
-  badRequest({ errorMessage: `The field ${field} is required.` });
 };
