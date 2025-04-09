@@ -3,6 +3,7 @@ import express from 'express';
 import {
   makeCreateUserController,
   makeDeleteUserController,
+  makeGetUserBalanceController,
   makeGetUserByIdController,
   makeUpdateUserController,
 } from './src/factories/controllers/user.js';
@@ -23,6 +24,14 @@ app.get('/api/users/:userId', async (request, response) => {
   const { statusCode, body } = await getUserByIdController.execute(request);
 
   response.status(statusCode).send(body);
+});
+
+app.get('/api/users/:userId/balance', async (req, res) => {
+  const getUserBalanceController = makeGetUserBalanceController();
+
+  const { statusCode, body } = await getUserBalanceController.execute(req);
+
+  res.status(statusCode).send(body);
 });
 
 app.post('/api/users', async (request, response) => {
