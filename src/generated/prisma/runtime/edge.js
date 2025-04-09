@@ -1,10 +1,3 @@
-/* eslint-disable no-empty */
-/* eslint-disable getter-return */
-/* eslint-disable no-prototype-builtins */
-/* eslint-disable no-extra-boolean-cast */
-/* eslint-disable no-constant-binary-expression */
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
 'use strict';
 var ya = Object.create;
 var ar = Object.defineProperty;
@@ -1472,9 +1465,7 @@ var Ti = Fe((Ke) => {
         (o > 3
           ? t === 0 || t === BigInt(0)
             ? (a = `>= 0${s} and < 2${s} ** ${(o + 1) * 8}${s}`)
-            : (a = `>= -(2${s} ** ${(o + 1) * 8 - 1}${s}) and < 2 ** ${
-                (o + 1) * 8 - 1
-              }${s}`)
+            : (a = `>= -(2${s} ** ${(o + 1) * 8 - 1}${s}) and < 2 ** ${(o + 1) * 8 - 1}${s}`)
           : (a = `>= ${t}${s} and <= ${r}${s}`),
         new Je.ERR_OUT_OF_RANGE('value', a, e))
       );
@@ -4818,9 +4809,7 @@ function Su(
     (n
       ? (a.push(
           s.red(
-            `Oops, an unknown error occurred! This is ${s.bold(
-              'on us',
-            )}, you did nothing wrong.`,
+            `Oops, an unknown error occurred! This is ${s.bold('on us')}, you did nothing wrong.`,
           ),
         ),
         a.push(
@@ -5359,11 +5348,7 @@ function Mu(e, t) {
     r.getField(e.secondField)?.markAsError()),
     t.addErrorMessage(
       (n) =>
-        `Please ${n.bold('either')} use ${n.green(
-          `\`${e.firstField}\``,
-        )} or ${n.green(`\`${e.secondField}\``)}, but ${n.red(
-          'not both',
-        )} at the same time.`,
+        `Please ${n.bold('either')} use ${n.green(`\`${e.firstField}\``)} or ${n.green(`\`${e.secondField}\``)}, but ${n.red('not both')} at the same time.`,
     );
 }
 function _u(e, t) {
@@ -5374,9 +5359,7 @@ function _u(e, t) {
     for (let s of i.fields)
       s.isRelation && o.addSuggestion(new le(s.name, 'true'));
   t.addErrorMessage((s) => {
-    let a = `Invalid scalar field ${s.red(`\`${n}\``)} for ${s.bold(
-      'include',
-    )} statement`;
+    let a = `Invalid scalar field ${s.red(`\`${n}\``)} for ${s.bold('include')} statement`;
     return (
       i ? (a += ` on model ${s.bold(i.name)}. ${_t(s)}`) : (a += '.'),
       (a += `
@@ -5411,11 +5394,7 @@ function Fu(e, t, r) {
   for (let n of e.outputType.fields) r.addSuggestion(new le(n.name, 'false'));
   t.addErrorMessage(
     (n) =>
-      `The ${n.red(
-        'omit',
-      )} statement includes every field of the model ${n.bold(
-        e.outputType.name,
-      )}. At least one field must be included in the result`,
+      `The ${n.red('omit')} statement includes every field of the model ${n.bold(e.outputType.name)}. At least one field must be included in the result`,
   );
 }
 function Lu(e, t) {
@@ -5425,12 +5404,8 @@ function Lu(e, t) {
   n && (n.removeAllFields(), _o(n, r)),
     t.addErrorMessage((o) =>
       i
-        ? `The ${o.red('`select`')} statement for type ${o.bold(
-            r.name,
-          )} must not be empty. ${_t(o)}`
-        : `The ${o.red('`select`')} statement for type ${o.bold(
-            r.name,
-          )} needs ${o.bold('at least one truthy value')}.`,
+        ? `The ${o.red('`select`')} statement for type ${o.bold(r.name)} must not be empty. ${_t(o)}`
+        : `The ${o.red('`select`')} statement for type ${o.bold(r.name)} needs ${o.bold('at least one truthy value')}.`,
     );
 }
 function Bu(e, t) {
@@ -5449,11 +5424,7 @@ function Bu(e, t) {
   }
   t.addErrorMessage(
     (i) =>
-      `The global ${i.red(
-        'omit',
-      )} configuration excludes every field of the model ${i.bold(
-        e.outputType.name,
-      )}. At least one field must be included in the result`,
+      `The global ${i.red('omit')} configuration excludes every field of the model ${i.bold(e.outputType.name)}. At least one field must be included in the result`,
   );
 }
 function Uu(e, t) {
@@ -5489,9 +5460,7 @@ function qu(e, t) {
   r.parentKind !== 'unknown' && r.field.value.markAsError(),
     t.addErrorMessage(
       (n) =>
-        `Invalid value for selection field \`${n.red(r.fieldName)}\`: ${
-          e.underlyingError
-        }`,
+        `Invalid value for selection field \`${n.red(r.fieldName)}\`: ${e.underlyingError}`,
     );
 }
 function $u(e, t) {
@@ -5569,11 +5538,7 @@ function Gu(e, t) {
         'or',
         e.argument.typeNames.map((s) => i.green(s)),
       );
-      return `Argument \`${i.bold(
-        r,
-      )}\`: Invalid value provided. Expected ${o}, provided ${i.red(
-        e.inferredType,
-      )}.`;
+      return `Argument \`${i.bold(r)}\`: Invalid value provided. Expected ${o}, provided ${i.red(e.inferredType)}.`;
     });
 }
 function Qu(e, t) {
@@ -6332,9 +6297,7 @@ function Ho(e, t) {
     selectionPath: t.getSelectionPath(),
     argumentPath: t.getArgumentPath(),
     argument: { name: t.getArgumentName(), typeNames: [] },
-    underlyingError: `We could not serialize ${Object.prototype.toString.call(
-      e,
-    )} value. Serialize the object to JSON or implement a ".toJSON()" method on it`,
+    underlyingError: `We could not serialize ${Object.prototype.toString.call(e)} value. Serialize the object to JSON or implement a ".toJSON()" method on it`,
   });
 }
 function Ko(e, t) {
@@ -8058,9 +8021,7 @@ async function Zc(e, t) {
       h = await Ve(g, { clientVersion: n });
     if (!h.ok)
       throw new Error(
-        `Failed to fetch stable Prisma version, unpkg.com status ${h.status} ${
-          h.statusText
-        }, response body: ${(await h.text()) || '<empty body>'}`,
+        `Failed to fetch stable Prisma version, unpkg.com status ${h.status} ${h.statusText}, response body: ${(await h.text()) || '<empty body>'}`,
       );
     let v = await h.text();
     Fs('length of body fetched from unpkg.com', v.length);
@@ -8419,9 +8380,7 @@ var Bs = 3,
           if (!(i instanceof se) || !i.isRetryable) throw i;
           if (r >= Bs) throw i instanceof gt ? i.cause : i;
           this.logEmitter.emit('warn', {
-            message: `Attempt ${r + 1}/${Bs} failed for ${t.actionGerund}: ${
-              i.message ?? '(unknown)'
-            }`,
+            message: `Attempt ${r + 1}/${Bs} failed for ${t.actionGerund}: ${i.message ?? '(unknown)'}`,
             timestamp: new Date(),
             target: '',
           });
@@ -9215,9 +9174,7 @@ var oa = [
       if (e) {
         if (typeof e != 'object' || Array.isArray(e))
           throw new U(
-            `Invalid value ${JSON.stringify(
-              e,
-            )} for "datasources" provided to PrismaClient constructor`,
+            `Invalid value ${JSON.stringify(e)} for "datasources" provided to PrismaClient constructor`,
           );
         for (let [r, n] of Object.entries(e)) {
           if (!t.includes(r)) {
@@ -9227,21 +9184,15 @@ var oa = [
             );
           }
           if (typeof n != 'object' || Array.isArray(n))
-            throw new U(`Invalid value ${JSON.stringify(
-              e,
-            )} for datasource "${r}" provided to PrismaClient constructor.
+            throw new U(`Invalid value ${JSON.stringify(e)} for datasource "${r}" provided to PrismaClient constructor.
 It should have this form: { url: "CONNECTION_STRING" }`);
           if (n && typeof n == 'object')
             for (let [i, o] of Object.entries(n)) {
               if (i !== 'url')
-                throw new U(`Invalid value ${JSON.stringify(
-                  e,
-                )} for datasource "${r}" provided to PrismaClient constructor.
+                throw new U(`Invalid value ${JSON.stringify(e)} for datasource "${r}" provided to PrismaClient constructor.
 It should have this form: { url: "CONNECTION_STRING" }`);
               if (typeof o != 'string')
-                throw new U(`Invalid value ${JSON.stringify(
-                  o,
-                )} for datasource "${r}" provided to PrismaClient constructor.
+                throw new U(`Invalid value ${JSON.stringify(o)} for datasource "${r}" provided to PrismaClient constructor.
 It should have this form: { url: "CONNECTION_STRING" }`);
             }
         }
@@ -9268,18 +9219,14 @@ It should have this form: { url: "CONNECTION_STRING" }`);
     },
     datasourceUrl: (e) => {
       if (typeof e < 'u' && typeof e != 'string')
-        throw new U(`Invalid value ${JSON.stringify(
-          e,
-        )} for "datasourceUrl" provided to PrismaClient constructor.
+        throw new U(`Invalid value ${JSON.stringify(e)} for "datasourceUrl" provided to PrismaClient constructor.
 Expected string or undefined.`);
     },
     errorFormat: (e) => {
       if (e) {
         if (typeof e != 'string')
           throw new U(
-            `Invalid value ${JSON.stringify(
-              e,
-            )} for "errorFormat" provided to PrismaClient constructor.`,
+            `Invalid value ${JSON.stringify(e)} for "errorFormat" provided to PrismaClient constructor.`,
           );
         if (!sa.includes(e)) {
           let t = bt(e, sa);
@@ -9293,9 +9240,7 @@ Expected string or undefined.`);
       if (!e) return;
       if (!Array.isArray(e))
         throw new U(
-          `Invalid value ${JSON.stringify(
-            e,
-          )} for "log" provided to PrismaClient constructor.`,
+          `Invalid value ${JSON.stringify(e)} for "log" provided to PrismaClient constructor.`,
         );
       function t(r) {
         if (typeof r == 'string' && !aa.includes(r)) {
@@ -9314,9 +9259,7 @@ Expected string or undefined.`);
             if (!o.includes(i)) {
               let s = bt(i, o);
               throw new U(
-                `Invalid value ${JSON.stringify(
-                  i,
-                )} for "emit" in logLevel provided to PrismaClient constructor.${s}`,
+                `Invalid value ${JSON.stringify(i)} for "emit" in logLevel provided to PrismaClient constructor.${s}`,
               );
             }
           },
@@ -9375,17 +9318,13 @@ Expected string or undefined.`);
       let t = ['debug', 'engine', 'configOverride'];
       if (typeof e != 'object')
         throw new U(
-          `Invalid value ${JSON.stringify(
-            e,
-          )} for "__internal" to PrismaClient constructor`,
+          `Invalid value ${JSON.stringify(e)} for "__internal" to PrismaClient constructor`,
         );
       for (let [r] of Object.entries(e))
         if (!t.includes(r)) {
           let n = bt(r, t);
           throw new U(
-            `Invalid property ${JSON.stringify(
-              r,
-            )} for "__internal" provided to PrismaClient constructor.${n}`,
+            `Invalid property ${JSON.stringify(r)} for "__internal" provided to PrismaClient constructor.${n}`,
           );
         }
     },

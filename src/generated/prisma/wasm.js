@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-
 Object.defineProperty(exports, '__esModule', { value: true });
 
 const {
@@ -118,9 +116,18 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   first_name: 'first_name',
-  las_name: 'las_name',
+  last_name: 'last_name',
   email: 'email',
   password: 'password',
+};
+
+exports.Prisma.TransactionScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  name: 'name',
+  date: 'date',
+  amount: 'amount',
+  type: 'type',
 };
 
 exports.Prisma.SortOrder = {
@@ -132,9 +139,15 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive',
 };
+exports.TransactionType = exports.$Enums.TransactionType = {
+  EARNING: 'EARNING',
+  EXPENSE: 'EXPENSE',
+  INVESTMENT: 'INVESTMENT',
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Transaction: 'Transaction',
 };
 
 /**

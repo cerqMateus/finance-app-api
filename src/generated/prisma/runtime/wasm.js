@@ -1,11 +1,3 @@
-/* eslint-disable no-redeclare */
-/* eslint-disable no-prototype-builtins */
-/* eslint-disable no-cond-assign */
-/* eslint-disable no-empty */
-/* eslint-disable no-unreachable */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-constant-binary-expression */
-/* eslint-disable no-undef */
 'use strict';
 var Yo = Object.create;
 var Ot = Object.defineProperty;
@@ -1048,6 +1040,7 @@ var Fe,
   It,
   R,
   he,
+  Tr,
   _t,
   En = ne(() => {
     'use strict';
@@ -2765,9 +2758,7 @@ function Zs(
     (n
       ? (a.push(
           s.red(
-            `Oops, an unknown error occurred! This is ${s.bold(
-              'on us',
-            )}, you did nothing wrong.`,
+            `Oops, an unknown error occurred! This is ${s.bold('on us')}, you did nothing wrong.`,
           ),
         ),
         a.push(
@@ -3319,11 +3310,7 @@ function ia(t, e) {
     r.getField(t.secondField)?.markAsError()),
     e.addErrorMessage(
       (n) =>
-        `Please ${n.bold('either')} use ${n.green(
-          `\`${t.firstField}\``,
-        )} or ${n.green(`\`${t.secondField}\``)}, but ${n.red(
-          'not both',
-        )} at the same time.`,
+        `Please ${n.bold('either')} use ${n.green(`\`${t.firstField}\``)} or ${n.green(`\`${t.secondField}\``)}, but ${n.red('not both')} at the same time.`,
     );
 }
 function oa(t, e) {
@@ -3334,9 +3321,7 @@ function oa(t, e) {
     for (let s of i.fields)
       s.isRelation && o.addSuggestion(new re(s.name, 'true'));
   e.addErrorMessage((s) => {
-    let a = `Invalid scalar field ${s.red(`\`${n}\``)} for ${s.bold(
-      'include',
-    )} statement`;
+    let a = `Invalid scalar field ${s.red(`\`${n}\``)} for ${s.bold('include')} statement`;
     return (
       i ? (a += ` on model ${s.bold(i.name)}. ${ft(s)}`) : (a += '.'),
       (a += `
@@ -3371,11 +3356,7 @@ function aa(t, e, r) {
   for (let n of t.outputType.fields) r.addSuggestion(new re(n.name, 'false'));
   e.addErrorMessage(
     (n) =>
-      `The ${n.red(
-        'omit',
-      )} statement includes every field of the model ${n.bold(
-        t.outputType.name,
-      )}. At least one field must be included in the result`,
+      `The ${n.red('omit')} statement includes every field of the model ${n.bold(t.outputType.name)}. At least one field must be included in the result`,
   );
 }
 function la(t, e) {
@@ -3385,12 +3366,8 @@ function la(t, e) {
   n && (n.removeAllFields(), yi(n, r)),
     e.addErrorMessage((o) =>
       i
-        ? `The ${o.red('`select`')} statement for type ${o.bold(
-            r.name,
-          )} must not be empty. ${ft(o)}`
-        : `The ${o.red('`select`')} statement for type ${o.bold(
-            r.name,
-          )} needs ${o.bold('at least one truthy value')}.`,
+        ? `The ${o.red('`select`')} statement for type ${o.bold(r.name)} must not be empty. ${ft(o)}`
+        : `The ${o.red('`select`')} statement for type ${o.bold(r.name)} needs ${o.bold('at least one truthy value')}.`,
     );
 }
 function ua(t, e) {
@@ -3409,11 +3386,7 @@ function ua(t, e) {
   }
   e.addErrorMessage(
     (i) =>
-      `The global ${i.red(
-        'omit',
-      )} configuration excludes every field of the model ${i.bold(
-        t.outputType.name,
-      )}. At least one field must be included in the result`,
+      `The global ${i.red('omit')} configuration excludes every field of the model ${i.bold(t.outputType.name)}. At least one field must be included in the result`,
   );
 }
 function ca(t, e) {
@@ -3449,9 +3422,7 @@ function ma(t, e) {
   r.parentKind !== 'unknown' && r.field.value.markAsError(),
     e.addErrorMessage(
       (n) =>
-        `Invalid value for selection field \`${n.red(r.fieldName)}\`: ${
-          t.underlyingError
-        }`,
+        `Invalid value for selection field \`${n.red(r.fieldName)}\`: ${t.underlyingError}`,
     );
 }
 function pa(t, e) {
@@ -3529,11 +3500,7 @@ function ga(t, e) {
         'or',
         t.argument.typeNames.map((s) => i.green(s)),
       );
-      return `Argument \`${i.bold(
-        r,
-      )}\`: Invalid value provided. Expected ${o}, provided ${i.red(
-        t.inferredType,
-      )}.`;
+      return `Argument \`${i.bold(r)}\`: Invalid value provided. Expected ${o}, provided ${i.red(t.inferredType)}.`;
     });
 }
 function ya(t, e) {
@@ -4302,9 +4269,7 @@ function Oi(t, e) {
     selectionPath: e.getSelectionPath(),
     argumentPath: e.getArgumentPath(),
     argument: { name: e.getArgumentName(), typeNames: [] },
-    underlyingError: `We could not serialize ${Object.prototype.toString.call(
-      t,
-    )} value. Serialize the object to JSON or implement a ".toJSON()" method on it`,
+    underlyingError: `We could not serialize ${Object.prototype.toString.call(t)} value. Serialize the object to JSON or implement a ".toJSON()" method on it`,
   });
 }
 function Mi(t, e) {
@@ -5718,9 +5683,7 @@ var tn,
       let { clientVersion: e, adapter: r, engineWasm: n } = t;
       if (r === void 0)
         throw new I(
-          `The \`adapter\` option for \`PrismaClient\` is required in this context (${
-            Re().prettyName
-          })`,
+          `The \`adapter\` option for \`PrismaClient\` is required in this context (${Re().prettyName})`,
           e,
         );
       if (n === void 0)
@@ -6242,9 +6205,7 @@ function bo({ copyEngine: t = !0 }, e) {
   if (o) return new pr(e);
   {
     let T = [
-      `PrismaClient failed to initialize because it wasn't configured to run in this environment (${
-        Re().prettyName
-      }).`,
+      `PrismaClient failed to initialize because it wasn't configured to run in this environment (${Re().prettyName}).`,
       'In order to run Prisma Client in an edge runtime, you will need to configure one of the following options:',
       '- Enable Driver Adapters: https://pris.ly/d/driver-adapters',
       '- Enable Accelerate: https://pris.ly/d/accelerate',
@@ -6997,9 +6958,7 @@ var qo = [
       if (t) {
         if (typeof t != 'object' || Array.isArray(t))
           throw new _(
-            `Invalid value ${JSON.stringify(
-              t,
-            )} for "datasources" provided to PrismaClient constructor`,
+            `Invalid value ${JSON.stringify(t)} for "datasources" provided to PrismaClient constructor`,
           );
         for (let [r, n] of Object.entries(t)) {
           if (!e.includes(r)) {
@@ -7009,21 +6968,15 @@ var qo = [
             );
           }
           if (typeof n != 'object' || Array.isArray(n))
-            throw new _(`Invalid value ${JSON.stringify(
-              t,
-            )} for datasource "${r}" provided to PrismaClient constructor.
+            throw new _(`Invalid value ${JSON.stringify(t)} for datasource "${r}" provided to PrismaClient constructor.
 It should have this form: { url: "CONNECTION_STRING" }`);
           if (n && typeof n == 'object')
             for (let [i, o] of Object.entries(n)) {
               if (i !== 'url')
-                throw new _(`Invalid value ${JSON.stringify(
-                  t,
-                )} for datasource "${r}" provided to PrismaClient constructor.
+                throw new _(`Invalid value ${JSON.stringify(t)} for datasource "${r}" provided to PrismaClient constructor.
 It should have this form: { url: "CONNECTION_STRING" }`);
               if (typeof o != 'string')
-                throw new _(`Invalid value ${JSON.stringify(
-                  o,
-                )} for datasource "${r}" provided to PrismaClient constructor.
+                throw new _(`Invalid value ${JSON.stringify(o)} for datasource "${r}" provided to PrismaClient constructor.
 It should have this form: { url: "CONNECTION_STRING" }`);
             }
         }
@@ -7050,18 +7003,14 @@ It should have this form: { url: "CONNECTION_STRING" }`);
     },
     datasourceUrl: (t) => {
       if (typeof t < 'u' && typeof t != 'string')
-        throw new _(`Invalid value ${JSON.stringify(
-          t,
-        )} for "datasourceUrl" provided to PrismaClient constructor.
+        throw new _(`Invalid value ${JSON.stringify(t)} for "datasourceUrl" provided to PrismaClient constructor.
 Expected string or undefined.`);
     },
     errorFormat: (t) => {
       if (t) {
         if (typeof t != 'string')
           throw new _(
-            `Invalid value ${JSON.stringify(
-              t,
-            )} for "errorFormat" provided to PrismaClient constructor.`,
+            `Invalid value ${JSON.stringify(t)} for "errorFormat" provided to PrismaClient constructor.`,
           );
         if (!Uo.includes(t)) {
           let e = tt(t, Uo);
@@ -7075,9 +7024,7 @@ Expected string or undefined.`);
       if (!t) return;
       if (!Array.isArray(t))
         throw new _(
-          `Invalid value ${JSON.stringify(
-            t,
-          )} for "log" provided to PrismaClient constructor.`,
+          `Invalid value ${JSON.stringify(t)} for "log" provided to PrismaClient constructor.`,
         );
       function e(r) {
         if (typeof r == 'string' && !Bo.includes(r)) {
@@ -7096,9 +7043,7 @@ Expected string or undefined.`);
             if (!o.includes(i)) {
               let s = tt(i, o);
               throw new _(
-                `Invalid value ${JSON.stringify(
-                  i,
-                )} for "emit" in logLevel provided to PrismaClient constructor.${s}`,
+                `Invalid value ${JSON.stringify(i)} for "emit" in logLevel provided to PrismaClient constructor.${s}`,
               );
             }
           },
@@ -7157,17 +7102,13 @@ Expected string or undefined.`);
       let e = ['debug', 'engine', 'configOverride'];
       if (typeof t != 'object')
         throw new _(
-          `Invalid value ${JSON.stringify(
-            t,
-          )} for "__internal" to PrismaClient constructor`,
+          `Invalid value ${JSON.stringify(t)} for "__internal" to PrismaClient constructor`,
         );
       for (let [r] of Object.entries(t))
         if (!e.includes(r)) {
           let n = tt(r, e);
           throw new _(
-            `Invalid property ${JSON.stringify(
-              r,
-            )} for "__internal" provided to PrismaClient constructor.${n}`,
+            `Invalid property ${JSON.stringify(r)} for "__internal" provided to PrismaClient constructor.${n}`,
           );
         }
     },

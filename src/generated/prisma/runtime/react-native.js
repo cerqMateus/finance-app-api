@@ -1,11 +1,3 @@
-/* eslint-disable no-useless-escape */
-/* eslint-disable no-constant-binary-expression */
-/* eslint-disable no-empty */
-/* eslint-disable no-redeclare */
-/* eslint-disable no-prototype-builtins */
-/* eslint-disable getter-return */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-undef */
 'use strict';
 var ba = Object.create;
 var tr = Object.defineProperty;
@@ -1483,9 +1475,7 @@ var Pi = Ae((rt) => {
         (o > 3
           ? t === 0 || t === BigInt(0)
             ? (a = `>= 0${s} and < 2${s} ** ${(o + 1) * 8}${s}`)
-            : (a = `>= -(2${s} ** ${(o + 1) * 8 - 1}${s}) and < 2 ** ${
-                (o + 1) * 8 - 1
-              }${s}`)
+            : (a = `>= -(2${s} ** ${(o + 1) * 8 - 1}${s}) and < 2 ** ${(o + 1) * 8 - 1}${s}`)
           : (a = `>= ${t}${s} and <= ${r}${s}`),
         new Xe.ERR_OUT_OF_RANGE('value', a, e))
       );
@@ -2330,9 +2320,7 @@ function wl(e, t = 2) {
 function Ii(e = 7500) {
   let t = Ot.map(
     ([r, ...n]) =>
-      `${r} ${n
-        .map((i) => (typeof i == 'string' ? i : JSON.stringify(i)))
-        .join(' ')}`,
+      `${r} ${n.map((i) => (typeof i == 'string' ? i : JSON.stringify(i))).join(' ')}`,
   ).join(`
 `);
   return t.length < e ? t : t.slice(-e);
@@ -5470,9 +5458,7 @@ function Zu(
     (n
       ? (a.push(
           s.red(
-            `Oops, an unknown error occurred! This is ${s.bold(
-              'on us',
-            )}, you did nothing wrong.`,
+            `Oops, an unknown error occurred! This is ${s.bold('on us')}, you did nothing wrong.`,
           ),
         ),
         a.push(
@@ -6006,11 +5992,7 @@ function nc(e, t) {
     r.getField(e.secondField)?.markAsError()),
     t.addErrorMessage(
       (n) =>
-        `Please ${n.bold('either')} use ${n.green(
-          `\`${e.firstField}\``,
-        )} or ${n.green(`\`${e.secondField}\``)}, but ${n.red(
-          'not both',
-        )} at the same time.`,
+        `Please ${n.bold('either')} use ${n.green(`\`${e.firstField}\``)} or ${n.green(`\`${e.secondField}\``)}, but ${n.red('not both')} at the same time.`,
     );
 }
 function ic(e, t) {
@@ -6021,9 +6003,7 @@ function ic(e, t) {
     for (let s of i.fields)
       s.isRelation && o.addSuggestion(new ce(s.name, 'true'));
   t.addErrorMessage((s) => {
-    let a = `Invalid scalar field ${s.red(`\`${n}\``)} for ${s.bold(
-      'include',
-    )} statement`;
+    let a = `Invalid scalar field ${s.red(`\`${n}\``)} for ${s.bold('include')} statement`;
     return (
       i ? (a += ` on model ${s.bold(i.name)}. ${jt(s)}`) : (a += '.'),
       (a += `
@@ -6058,11 +6038,7 @@ function sc(e, t, r) {
   for (let n of e.outputType.fields) r.addSuggestion(new ce(n.name, 'false'));
   t.addErrorMessage(
     (n) =>
-      `The ${n.red(
-        'omit',
-      )} statement includes every field of the model ${n.bold(
-        e.outputType.name,
-      )}. At least one field must be included in the result`,
+      `The ${n.red('omit')} statement includes every field of the model ${n.bold(e.outputType.name)}. At least one field must be included in the result`,
   );
 }
 function ac(e, t) {
@@ -6072,12 +6048,8 @@ function ac(e, t) {
   n && (n.removeAllFields(), Io(n, r)),
     t.addErrorMessage((o) =>
       i
-        ? `The ${o.red('`select`')} statement for type ${o.bold(
-            r.name,
-          )} must not be empty. ${jt(o)}`
-        : `The ${o.red('`select`')} statement for type ${o.bold(
-            r.name,
-          )} needs ${o.bold('at least one truthy value')}.`,
+        ? `The ${o.red('`select`')} statement for type ${o.bold(r.name)} must not be empty. ${jt(o)}`
+        : `The ${o.red('`select`')} statement for type ${o.bold(r.name)} needs ${o.bold('at least one truthy value')}.`,
     );
 }
 function lc(e, t) {
@@ -6096,11 +6068,7 @@ function lc(e, t) {
   }
   t.addErrorMessage(
     (i) =>
-      `The global ${i.red(
-        'omit',
-      )} configuration excludes every field of the model ${i.bold(
-        e.outputType.name,
-      )}. At least one field must be included in the result`,
+      `The global ${i.red('omit')} configuration excludes every field of the model ${i.bold(e.outputType.name)}. At least one field must be included in the result`,
   );
 }
 function uc(e, t) {
@@ -6136,9 +6104,7 @@ function cc(e, t) {
   r.parentKind !== 'unknown' && r.field.value.markAsError(),
     t.addErrorMessage(
       (n) =>
-        `Invalid value for selection field \`${n.red(r.fieldName)}\`: ${
-          e.underlyingError
-        }`,
+        `Invalid value for selection field \`${n.red(r.fieldName)}\`: ${e.underlyingError}`,
     );
 }
 function pc(e, t) {
@@ -6216,11 +6182,7 @@ function mc(e, t) {
         'or',
         e.argument.typeNames.map((s) => i.green(s)),
       );
-      return `Argument \`${i.bold(
-        r,
-      )}\`: Invalid value provided. Expected ${o}, provided ${i.red(
-        e.inferredType,
-      )}.`;
+      return `Argument \`${i.bold(r)}\`: Invalid value provided. Expected ${o}, provided ${i.red(e.inferredType)}.`;
     });
 }
 function gc(e, t) {
@@ -6979,9 +6941,7 @@ function Wo(e, t) {
     selectionPath: t.getSelectionPath(),
     argumentPath: t.getArgumentPath(),
     argument: { name: t.getArgumentName(), typeNames: [] },
-    underlyingError: `We could not serialize ${Object.prototype.toString.call(
-      e,
-    )} value. Serialize the object to JSON or implement a ".toJSON()" method on it`,
+    underlyingError: `We could not serialize ${Object.prototype.toString.call(e)} value. Serialize the object to JSON or implement a ".toJSON()" method on it`,
   });
 }
 function Ko(e, t) {
@@ -9820,9 +9780,7 @@ var aa = [
       if (e) {
         if (typeof e != 'object' || Array.isArray(e))
           throw new q(
-            `Invalid value ${JSON.stringify(
-              e,
-            )} for "datasources" provided to PrismaClient constructor`,
+            `Invalid value ${JSON.stringify(e)} for "datasources" provided to PrismaClient constructor`,
           );
         for (let [r, n] of Object.entries(e)) {
           if (!t.includes(r)) {
@@ -9832,21 +9790,15 @@ var aa = [
             );
           }
           if (typeof n != 'object' || Array.isArray(n))
-            throw new q(`Invalid value ${JSON.stringify(
-              e,
-            )} for datasource "${r}" provided to PrismaClient constructor.
+            throw new q(`Invalid value ${JSON.stringify(e)} for datasource "${r}" provided to PrismaClient constructor.
 It should have this form: { url: "CONNECTION_STRING" }`);
           if (n && typeof n == 'object')
             for (let [i, o] of Object.entries(n)) {
               if (i !== 'url')
-                throw new q(`Invalid value ${JSON.stringify(
-                  e,
-                )} for datasource "${r}" provided to PrismaClient constructor.
+                throw new q(`Invalid value ${JSON.stringify(e)} for datasource "${r}" provided to PrismaClient constructor.
 It should have this form: { url: "CONNECTION_STRING" }`);
               if (typeof o != 'string')
-                throw new q(`Invalid value ${JSON.stringify(
-                  o,
-                )} for datasource "${r}" provided to PrismaClient constructor.
+                throw new q(`Invalid value ${JSON.stringify(o)} for datasource "${r}" provided to PrismaClient constructor.
 It should have this form: { url: "CONNECTION_STRING" }`);
             }
         }
@@ -9873,18 +9825,14 @@ It should have this form: { url: "CONNECTION_STRING" }`);
     },
     datasourceUrl: (e) => {
       if (typeof e < 'u' && typeof e != 'string')
-        throw new q(`Invalid value ${JSON.stringify(
-          e,
-        )} for "datasourceUrl" provided to PrismaClient constructor.
+        throw new q(`Invalid value ${JSON.stringify(e)} for "datasourceUrl" provided to PrismaClient constructor.
 Expected string or undefined.`);
     },
     errorFormat: (e) => {
       if (e) {
         if (typeof e != 'string')
           throw new q(
-            `Invalid value ${JSON.stringify(
-              e,
-            )} for "errorFormat" provided to PrismaClient constructor.`,
+            `Invalid value ${JSON.stringify(e)} for "errorFormat" provided to PrismaClient constructor.`,
           );
         if (!la.includes(e)) {
           let t = Pt(e, la);
@@ -9898,9 +9846,7 @@ Expected string or undefined.`);
       if (!e) return;
       if (!Array.isArray(e))
         throw new q(
-          `Invalid value ${JSON.stringify(
-            e,
-          )} for "log" provided to PrismaClient constructor.`,
+          `Invalid value ${JSON.stringify(e)} for "log" provided to PrismaClient constructor.`,
         );
       function t(r) {
         if (typeof r == 'string' && !ua.includes(r)) {
@@ -9919,9 +9865,7 @@ Expected string or undefined.`);
             if (!o.includes(i)) {
               let s = Pt(i, o);
               throw new q(
-                `Invalid value ${JSON.stringify(
-                  i,
-                )} for "emit" in logLevel provided to PrismaClient constructor.${s}`,
+                `Invalid value ${JSON.stringify(i)} for "emit" in logLevel provided to PrismaClient constructor.${s}`,
               );
             }
           },
@@ -9980,17 +9924,13 @@ Expected string or undefined.`);
       let t = ['debug', 'engine', 'configOverride'];
       if (typeof e != 'object')
         throw new q(
-          `Invalid value ${JSON.stringify(
-            e,
-          )} for "__internal" to PrismaClient constructor`,
+          `Invalid value ${JSON.stringify(e)} for "__internal" to PrismaClient constructor`,
         );
       for (let [r] of Object.entries(e))
         if (!t.includes(r)) {
           let n = Pt(r, t);
           throw new q(
-            `Invalid property ${JSON.stringify(
-              r,
-            )} for "__internal" provided to PrismaClient constructor.${n}`,
+            `Invalid property ${JSON.stringify(r)} for "__internal" provided to PrismaClient constructor.${n}`,
           );
         }
     },

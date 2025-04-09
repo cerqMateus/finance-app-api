@@ -1,7 +1,3 @@
-/* eslint-disable no-constant-binary-expression */
-/* eslint-disable no-undef */
-/* eslint-disable no-prototype-builtins */
-/* eslint-disable no-unused-vars */
 'use strict';
 var ne = Object.defineProperty;
 var We = Object.getOwnPropertyDescriptor;
