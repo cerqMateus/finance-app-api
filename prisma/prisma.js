@@ -1,4 +1,3 @@
-const { PrismaClient } = require('@prisma/client');
+import { PrismaClient } from '@prisma/client';
 
-// eslint-disable-next-line no-unused-vars
-const prisma = new PrismaClient();
+export const prisma = new PrismaClient();
