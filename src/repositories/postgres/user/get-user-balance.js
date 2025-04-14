@@ -32,8 +32,8 @@ export class PostgresGetUserBalanceRepository {
       },
     });
 
-    const _totalEarnings = totalEarnings._sum.amount || new prisma.Decimal(0);
-    const _totalExpenses = totalExpenses._sum.amount || new prisma.Decimal(0);
+    const _totalEarnings = totalEarnings._sum.amount || 0;
+    const _totalExpenses = totalExpenses._sum.amount || 0;
     const _totalInvestments =
       totalInvestments._sum.amount || new prisma.Decimal(0);
 
