@@ -23,6 +23,12 @@ describe('deleteUserController', () => {
     };
   };
 
+  const httpRequest = {
+    params: {
+      userId: faker.string.uuid(),
+    },
+  };
+
   it('Should return 200 if user is deleted successfully', async () => {
     //arange
     const { sut } = makeSut();
@@ -49,5 +55,17 @@ describe('deleteUserController', () => {
     const result = await sut.execute(httpRequest);
     //assert
     expect(result.statusCode).toBe(400);
+  });
+
+  it('Should return 404 if user is not found', async () => {
+    //arange
+    const { sut, deleteUserUseCase } = makeSut();
+    jest.spyOn(deleteUserUseCase, 'execute').mockImplementationOnce(() => null);
+
+    //act
+    const result = await sut.execute(httpRequest);
+
+    //assert
+    expect(result.statusCode).toBe(404);
   });
 });
