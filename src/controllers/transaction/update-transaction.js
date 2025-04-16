@@ -1,20 +1,19 @@
 import {
+  checkIfIdIsValid,
+  invalidIdResponse,
+  serverError,
   badRequest,
   checkIfAmountIsValid,
-  checkIfIdIsValid,
-  checkIfTypeIsValid,
   invalidAmountResponse,
-  invalidIdResponse,
+  checkIfTypeIsValid,
   invalidTypeResponse,
   ok,
-  serverError,
 } from '../helpers/index.js';
 
 export class UpdateTransactionController {
   constructor(updateTransactionUseCase) {
     this.updateTransactionUseCase = updateTransactionUseCase;
   }
-
   async execute(httpRequest) {
     try {
       const idIsValid = checkIfIdIsValid(httpRequest.params.transactionId);
@@ -61,6 +60,7 @@ export class UpdateTransactionController {
       return ok(transaction);
     } catch (error) {
       console.error(error);
+
       return serverError();
     }
   }
