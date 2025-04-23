@@ -1,4 +1,5 @@
 import { EmailAlreadyInUseError } from '../../errors/user.js';
+
 export class CreateUserUseCase {
   constructor(
     getUserByEmailRepository,
@@ -20,7 +21,9 @@ export class CreateUserUseCase {
     if (userWithProvidedEmail) {
       throw new EmailAlreadyInUseError(createUserParams.email);
     }
+
     const userId = this.idGeneratorAdapter.execute();
+
     const hashedPassword = await this.passwordHasherAdapter.execute(
       createUserParams.password,
     );

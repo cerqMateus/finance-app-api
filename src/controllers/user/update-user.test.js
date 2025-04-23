@@ -1,17 +1,19 @@
-import { EmailAlreadyInUseError } from '../../errors/user.js';
+import { EmailAlreadyInUseError, UserNotFoundError } from '../../errors/user';
+import { user } from '../../tests';
+import { UpdateUserController } from './update-user';
 import { faker } from '@faker-js/faker';
-import { UpdateUserController } from './update-user.js';
 
 describe('UpdateUserController', () => {
-  class updateUserUseCaseStub {
-    async execute(user) {
+  class UpdateUserUseCaseStub {
+    async execute() {
       return user;
     }
   }
 
   const makeSut = () => {
-    const updateUserUseCase = new updateUserUseCaseStub();
+    const updateUserUseCase = new UpdateUserUseCaseStub();
     const sut = new UpdateUserController(updateUserUseCase);
+
     return { sut, updateUserUseCase };
   };
 
@@ -24,92 +26,129 @@ describe('UpdateUserController', () => {
       last_name: faker.person.lastName(),
       email: faker.internet.email(),
       password: faker.internet.password({
-        length: 6,
+        length: 7,
       }),
     },
   };
 
-  it('should return 200 if user is updated successfully', async () => {
+  it('should return 200 when updating a user successfully', async () => {
+    // arrange
     const { sut } = makeSut();
 
-    const result = await sut.execute(httpRequest);
+    // act
+    const response = await sut.execute(httpRequest);
 
-    expect(result.statusCode).toBe(200);
+    // assert
+    expect(response.statusCode).toBe(200);
   });
 
-  it('should return 400 if an invalid email provided', async () => {
+  it('should return 400 when an invalid email is provided', async () => {
+    // arrange
     const { sut } = makeSut();
 
-    const result = await sut.execute({
+    // act
+    const response = await sut.execute({
       params: httpRequest.params,
       body: {
         ...httpRequest.body,
         email: 'invalid_email',
       },
     });
-    expect(result.statusCode).toBe(400);
+
+    // assert
+    expect(response.statusCode).toBe(400);
   });
 
-  it('should return 400 if an invalid password is provided', async () => {
+  it('should return 400 when an invalid password is provided', async () => {
+    // arrange
     const { sut } = makeSut();
 
-    const result = await sut.execute({
+    // act
+    const response = await sut.execute({
       params: httpRequest.params,
       body: {
         ...httpRequest.body,
-        password: faker.internet.password({
-          length: 5,
-        }),
+        password: faker.internet.password({ length: 5 }),
       },
     });
-    expect(result.statusCode).toBe(400);
+
+    // assert
+    expect(response.statusCode).toBe(400);
   });
 
-  it('should return 400 if an invalid id is provided', async () => {
+  it('should return 400 when an invalid id is provided', async () => {
+    // arrange
     const { sut } = makeSut();
 
-    const result = await sut.execute({
+    // act
+    const response = await sut.execute({
       params: {
         userId: 'invalid_id',
       },
       body: httpRequest.body,
     });
-    expect(result.statusCode).toBe(400);
+
+    // assert
+    expect(response.statusCode).toBe(400);
   });
 
-  it('should return 400 if an unallowed field is provided', async () => {
+  it('should return 400 when an unallowed field is provided', async () => {
+    // arrange
     const { sut } = makeSut();
 
-    const result = await sut.execute({
+    // act
+    const response = await sut.execute({
       params: httpRequest.params,
       body: {
         ...httpRequest.body,
         unallowed_field: 'unallowed_value',
       },
     });
-    expect(result.statusCode).toBe(400);
+
+    // assert
+    expect(response.statusCode).toBe(400);
   });
 
-  it('should return 500 if UpdateUserUseCase throws an generic error', async () => {
+  it('should return 500 if UpdateUserUseCase throws with generic error', async () => {
+    // arrange
     const { sut, updateUserUseCase } = makeSut();
-    jest.spyOn(updateUserUseCase, 'execute').mockImplementationOnce(() => {
-      throw new EmailAlreadyInUseError(faker.internet.email());
-    });
+    jest.spyOn(updateUserUseCase, 'execute').mockRejectedValueOnce(new Error());
 
-    const result = await sut.execute(httpRequest);
+    // act
+    const response = await sut.execute(httpRequest);
 
-    expect(result.statusCode).toBe(500);
+    // assert
+    expect(response.statusCode).toBe(500);
   });
 
-  it('should return 500 if UpdateUserUseCase throws EmailAlreadyInUseError', async () => {
+  it('should return 400 if UpdateUserUseCase throws EmailAlreadyInUseError', async () => {
+    // arrange
     const { sut, updateUserUseCase } = makeSut();
-    jest.spyOn(updateUserUseCase, 'execute').mockImplementationOnce(() => {
-      throw new Error();
-    });
+    jest
+      .spyOn(updateUserUseCase, 'execute')
+      .mockRejectedValueOnce(
+        new EmailAlreadyInUseError(faker.internet.email()),
+      );
 
-    const result = await sut.execute(httpRequest);
+    // act
+    const response = await sut.execute(httpRequest);
 
-    expect(result.statusCode).toBe(500);
+    // assert
+    expect(response.statusCode).toBe(400);
+  });
+
+  it('should return 404 if UpdateUserUseCase throws UserNotFoundError', async () => {
+    // arrange
+    const { sut, updateUserUseCase } = makeSut();
+    jest
+      .spyOn(updateUserUseCase, 'execute')
+      .mockRejectedValueOnce(new UserNotFoundError(faker.string.uuid()));
+
+    // act
+    const response = await sut.execute(httpRequest);
+
+    // assert
+    expect(response.statusCode).toBe(404);
   });
 
   it('should call UpdateUserUseCase with correct params', async () => {

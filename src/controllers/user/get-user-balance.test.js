@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker';
-import { GetUserBalanceController } from './get-user-balance.js';
+import { GetUserBalanceController } from './get-user-balance';
 import { UserNotFoundError } from '../../errors/user';
 
-describe('getUserBalanceController', () => {
+describe('GetUserBalanceController', () => {
   class GetUserBalanceUseCaseStub {
     async execute() {
       return faker.number.int();
@@ -12,10 +12,8 @@ describe('getUserBalanceController', () => {
   const makeSut = () => {
     const getUserBalanceUseCase = new GetUserBalanceUseCaseStub();
     const sut = new GetUserBalanceController(getUserBalanceUseCase);
-    return {
-      sut,
-      getUserBalanceUseCase,
-    };
+
+    return { sut, getUserBalanceUseCase };
   };
 
   const httpRequest = {
@@ -24,38 +22,39 @@ describe('getUserBalanceController', () => {
     },
   };
 
-  it('Should return 200 if user balance is retrieved successfully', async () => {
-    //arange
+  it('should return 200 when getting user balance', async () => {
+    // arrange
     const { sut } = makeSut();
-    //act
+
+    // act
     const result = await sut.execute(httpRequest);
-    //assert
+
+    // assert
     expect(result.statusCode).toBe(200);
   });
 
-  it('Should return 400 if id is invalid', async () => {
-    //arange
+  it('should return 400 when userId is invalid', async () => {
+    // arrange
     const { sut } = makeSut();
-    const httpRequest = {
-      params: {
-        userId: 'invalid_id',
-      },
-    };
-    //act
-    const result = await sut.execute(httpRequest);
-    //assert
+
+    // act
+    const result = await sut.execute({ params: { userId: 'invalid_id' } });
+
+    // assert
     expect(result.statusCode).toBe(400);
   });
 
-  it('Should return 500 if GetUserBalanceUseCase throws', async () => {
-    //arange
+  it('should return 500 if GetUserBalanceUseCase throws', async () => {
+    // arrange
     const { sut, getUserBalanceUseCase } = makeSut();
-    jest.spyOn(getUserBalanceUseCase, 'execute').mockImplementationOnce(() => {
-      throw new Error();
-    });
-    //act
+    jest
+      .spyOn(getUserBalanceUseCase, 'execute')
+      .mockRejectedValueOnce(new Error());
+
+    // act
     const result = await sut.execute(httpRequest);
-    //assert
+
+    // assert
     expect(result.statusCode).toBe(500);
   });
 

@@ -1,47 +1,56 @@
+import { Prisma, TransactionType } from '@prisma/client';
 import { prisma } from '../../../../prisma/prisma.js';
 
 export class PostgresGetUserBalanceRepository {
   async execute(userId) {
-    const totalExpenses = await prisma.transaction.aggregate({
+    const {
+      _sum: { amount: totalExpenses },
+    } = await prisma.transaction.aggregate({
       where: {
         user_id: userId,
-        type: 'EXPENSE',
+        type: TransactionType.EXPENSE,
       },
       _sum: {
         amount: true,
       },
     });
 
-    const totalEarnings = await prisma.transaction.aggregate({
+    const {
+      _sum: { amount: totalEarnings },
+    } = await prisma.transaction.aggregate({
       where: {
         user_id: userId,
-        type: 'EARNING',
+        type: TransactionType.EARNING,
       },
       _sum: {
         amount: true,
       },
     });
 
-    const totalInvestments = await prisma.transaction.aggregate({
+    const {
+      _sum: { amount: totalInvestments },
+    } = await prisma.transaction.aggregate({
       where: {
         user_id: userId,
-        type: 'INVESTMENT',
+        type: TransactionType.INVESTMENT,
       },
       _sum: {
         amount: true,
       },
     });
 
-    const _totalEarnings = totalEarnings._sum.amount || 0;
-    const _totalExpenses = totalExpenses._sum.amount || 0;
-    const _totalInvestments =
-      totalInvestments._sum.amount || new prisma.Decimal(0);
+    const _totalEarnings = totalEarnings || new Prisma.Decimal(0);
+    const _totalExpenses = totalExpenses || new Prisma.Decimal(0);
+    const _totalInvestments = totalInvestments || new Prisma.Decimal(0);
 
-    const balance = _totalEarnings - _totalExpenses - _totalInvestments;
+    const balance = new Prisma.Decimal(
+      _totalEarnings - _totalExpenses - _totalInvestments,
+    );
+
     return {
-      totalEarnings: _totalEarnings,
-      totalExpenses: _totalExpenses,
-      totalInvestments: _totalInvestments,
+      earnings: _totalEarnings,
+      expenses: _totalExpenses,
+      investments: _totalInvestments,
       balance,
     };
   }

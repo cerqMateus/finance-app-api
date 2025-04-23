@@ -1,3 +1,4 @@
+import { TransactionNotFoundError } from '../../errors/transaction.js';
 import {
   checkIfIdIsValid,
   invalidIdResponse,
@@ -13,23 +14,24 @@ export class DeleteTransactionController {
 
   async execute(httpRequest) {
     try {
-      const idIsvalid = checkIfIdIsValid(httpRequest.params.transactionId);
+      const idIsValid = checkIfIdIsValid(httpRequest.params.transactionId);
 
-      if (!idIsvalid) {
+      if (!idIsValid) {
         return invalidIdResponse();
       }
 
-      const transaction = await this.deleteTransactionUseCase.execute(
+      const deletedTransaction = await this.deleteTransactionUseCase.execute(
         httpRequest.params.transactionId,
       );
 
-      if (!transaction) {
+      return ok(deletedTransaction);
+    } catch (error) {
+      if (error instanceof TransactionNotFoundError) {
         return transactionNotFoundResponse();
       }
 
-      return ok(transaction);
-    } catch (error) {
       console.error(error);
+
       return serverError();
     }
   }
