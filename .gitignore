@@ -3,6 +3,9 @@ node_modules
 
 #Postgres Volume
 .postgres-data
+ 
+ # Tests
+ coverage
 
 
 #Environment Variables

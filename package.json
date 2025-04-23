@@ -7,7 +7,8 @@
     "test": "jest",
     "test:watch": "jest --watch --passWithNoTests --silent",
     "postinstall": "npx husky install",
-    "start:dev": "node --watch index.js"
+    "start:dev": "node --watch index.js",
+    "test:coverage": "jest --passWithNoTests --silent --coverage"
   },
   "keywords": [],
   "author": "",
