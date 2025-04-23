@@ -24,3 +24,12 @@ export const createTransactionSchema = z.object({
       }),
     ),
 });
+
+export const updateTransactionSchema = createTransactionSchema
+  .omit({
+    user_id: true,
+  })
+  .partial()
+  .strict({
+    message: 'Some provided field is not allowed.',
+  });
