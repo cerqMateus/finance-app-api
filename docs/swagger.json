@@ -150,6 +150,41 @@
           }
         }
       }
+    },
+    "/api/users/{userId}/balance": {
+      "get": {
+        "summary": "Get user balance",
+        "tags": ["User"],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the user to fetch balance for"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User balance found",
+            "schema": {
+              "$ref": "#/definitions/UserBalance"
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "schema": {
+              "$ref": "#/definitions/UserNotFoundResponse"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerErrorResponse"
+            }
+          }
+        }
+      }
     }
   },
 
@@ -197,6 +232,27 @@
         "password": {
           "type": "string",
           "example": "password123"
+        }
+      }
+    },
+    "UserBalance": {
+      "type": "object",
+      "properties": {
+        "earnings": {
+          "type": "string",
+          "example": "1000"
+        },
+        "expenses": {
+          "type": "string",
+          "example": "500"
+        },
+        "investments": {
+          "type": "string",
+          "example": "200"
+        },
+        "balance": {
+          "type": "string",
+          "example": "300"
         }
       }
     },
