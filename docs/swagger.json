@@ -257,6 +257,49 @@
           }
         }
       }
+    },
+    "/api/transactions/{transactionId}": {
+      "patch": {
+        "summary": "Update transaction by ID",
+        "tags": ["Transaction"],
+        "parameters": [
+          {
+            "name": "transactionId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the transaction to update"
+          },
+          {
+            "name": "body",
+            "required": true,
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdateTransactionParams"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transaction updated successfully",
+            "schema": {
+              "$ref": "#/definitions/Transaction"
+            }
+          },
+          "404": {
+            "description": "Transaction not found",
+            "schema": {
+              "$ref": "#/definitions/UserNotFoundResponse"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerErrorResponse"
+            }
+          }
+        }
+      }
     }
   },
 
@@ -387,6 +430,29 @@
         "userId": {
           "type": "string",
           "example": "e2f7b9d7-1c4e-4a2b-8c3e-5f8d6b8e5a0c"
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2023-10-01T12:00:00Z"
+        },
+        "amount": {
+          "type": "number",
+          "example": 2000
+        },
+        "type": {
+          "type": "string",
+          "enum": ["earning", "expense", "investment"],
+          "example": "earning"
+        }
+      }
+    },
+    "UpdateTransactionParams": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Salary"
         },
         "date": {
           "type": "string",
