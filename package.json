@@ -8,7 +8,9 @@
     "test:watch": "jest --watch --passWithNoTests --silent",
     "postinstall": "npx husky install",
     "start:dev": "node --watch index.js",
-    "test:coverage": "jest --passWithNoTests --silent --coverage"
+    "test:coverage": "jest --passWithNoTests --silent --coverage",
+    "eslint:check": "eslint src --ext .js",
+    "prettier:check": "prettier --check src"
   },
   "keywords": [],
   "author": "",
